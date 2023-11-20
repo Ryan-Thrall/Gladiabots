@@ -22,16 +22,32 @@
   align-items: center;
 }
 
+/* .hexagon:hover {
+  background-color: red;
+} */
+
 .light {
   background-color: rgb(232, 232, 232);
+}
+
+.light:hover {
+  background-color: rgb(215, 215, 215);
 }
 
 .medium {
   background-color: rgb(178, 178, 178);
 }
 
+.medium:hover {
+  background-color: rgb(155, 155, 155);
+}
+
 .dark {
   background-color: rgb(125, 125, 125);
+}
+
+.dark:hover {
+  background-color: rgb(111, 111, 111);
 }
 
 .board {
