@@ -11,9 +11,11 @@ function Tile({ color, image, x, y }: Props) {
   const classes = "hexagon " + color;
 
   return (
-    <div className={classes}>
+    <div className="hexContainer">
       {image && <div style={{ backgroundImage: `url(${image})` }} className="piece"></div>}
-      {/* <img src={image} alt="" /> */}
+      <div className={classes}>
+      </div>
+
     </div>
   )
 }

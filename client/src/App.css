@@ -7,6 +7,14 @@
   height: 100vh;
 }
 
+.hexContainer {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .hexagon {
   background-color: yellow;
   width: 150px;
@@ -20,7 +28,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 }
+
+
+/* .hexagon::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  clip-path: polygon(50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%);
+} */
 
 /* .hexagon:hover {
   background-color: red;
@@ -58,7 +86,7 @@
   margin: 0;
   padding: 0;
   height: 100vh;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  overflow: visible;
 }
 
 .row {
@@ -71,7 +99,11 @@
   margin-top: -36px;
 }
 
-.hexagon .piece {
+.piece {
+  z-index: 5;
+}
+
+.piece {
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;
@@ -79,14 +111,10 @@
   background-size: 90px;
 }
 
-.piece {
-  z-index: 3000;
-}
-
-.hexagon .piece:hover {
+.piece:hover {
   cursor: grab;
 }
 
-.hexagon .piece:active {
+.piece:active {
   cursor: grabbing;
 }
