@@ -70,3 +70,23 @@
 .row:not(:first-child) {
   margin-top: -36px;
 }
+
+.hexagon .piece {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90px;
+}
+
+.piece {
+  z-index: 3000;
+}
+
+.hexagon .piece:hover {
+  cursor: grab;
+}
+
+.hexagon .piece:active {
+  cursor: grabbing;
+}

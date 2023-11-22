@@ -1,67 +1,140 @@
 import React from 'react';
 import Tile from './Tile.tsx';
 
+interface Piece {
+  image: string;
+  x: number;
+  y: number;
+}
+
+const pieces: Piece[] = [];
+
+// Add four blue pieces to top row
+for (let i = 3; i <= 9; i++) {
+  pieces.push({ image: "assets/images/BlueBot.png", x: i, y: 0 });
+}
+
+// Add four red blue pieces to bottom row
+for (let i = 3; i <= 9; i++) {
+  pieces.push({ image: "assets/images/RedBot.png", x: i, y: 6 });
+}
+
 function Board() {
+
+  // SECTION Board generation setup variables
+  let board: any[] = [];
+  let xCieling = 9
+  let xFloor = 3
+  let startColorForRow = ["dark", "light", "medium", "dark", "medium", "light", "dark"];
+  let color = "";
+
+  // SECTION Board generation
+  for (let j = 0; j < 7; j++) {
+    // If first half of generation, decrease floor and increase cieling (Grow)
+    if (j > 0 && j < 4) {
+      xFloor--;
+      xCieling++;
+    }
+    // If second half of generation, increase floor and decrease cieling (Shrink)
+    else if (j >= 4) {
+      xFloor++;
+      xCieling--;
+    }
+
+    // Set color to start the row before alternating
+    color = startColorForRow[j];
+
+    for (let i = xFloor; i <= xCieling; i += 2) {
+      let image = "";
+
+      pieces.forEach(p => {
+        if (p.x === i && p.y === j) {
+          image = p.image;
+        }
+      });
+
+      // Alternate the color for each new tile
+      if (color === "light") {
+        color = "medium";
+      } else if (color === "medium") {
+        color = "dark";
+      } else if (color === "dark") {
+        color = "light";
+      }
+
+      // Add the tile to the board array
+      board.push(<Tile key={`${i}, ${j}`} color={color} x={i} y={j} image={image} />);
+    }
+  }
+
+  let activePiece: HTMLElement | null = null;
+
+  // SECTION Grabbing piece function
+  function grabPiece(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const element = e.target as HTMLElement;
+    if (element.classList.contains("piece")) {
+      console.log(element);
+
+      const x = e.clientX - 50;
+      const y = e.clientY - 50;
+      element.style.position = "absolute";
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+
+      activePiece = element;
+    }
+  }
+
+  function movePiece(e: React.MouseEvent) {
+
+    if (activePiece) {
+      const x = e.clientX - 50;
+      const y = e.clientY - 50;
+      activePiece.style.position = "absolute";
+      activePiece.style.left = `${x}px`;
+      activePiece.style.top = `${y}px`;
+    }
+
+  }
+
+  function dropPiece(e: React.MouseEvent) {
+    if (activePiece) {
+      activePiece = null;
+    }
+  }
+
+  console.log(board.slice(0, 4));
+
   return (
-    <div className="board">
+    <div className="board" onMouseMove={(e) => movePiece(e)} onMouseDown={e => grabPiece(e)} onMouseUp={e => dropPiece(e)}>
+
       <div className="row">
-        <Tile color="light" x={3} y={0} image="assets/images/BlueBot.png" />
-        <Tile color="medium" x={5} y={0} image="assets/images/BlueBot.png" />
-        <Tile color="dark" x={7} y={0} image="assets/images/BlueBot.png" />
-        <Tile color="light" x={9} y={0} image="assets/images/BlueBot.png" />
+        {board.slice(0, 4)}
       </div>
 
       <div className="row">
-        <Tile color="medium" x={2} y={1} />
-        <Tile color="dark" x={4} y={1} />
-        <Tile color="light" x={6} y={1} />
-        <Tile color="medium" x={8} y={1} />
-        <Tile color="dark" x={10} y={1} />
+        {board.slice(4, 9)}
       </div>
 
       <div className="row">
-        <Tile color="dark" x={1} y={2} />
-        <Tile color="light" x={3} y={2} />
-        <Tile color="medium" x={5} y={2} />
-        <Tile color="dark" x={7} y={2} />
-        <Tile color="light" x={9} y={2} />
-        <Tile color="medium" x={11} y={2} />
+        {board.slice(9, 15)}
       </div>
 
       <div className="row">
-        <Tile color="light" x={0} y={3} />
-        <Tile color="medium" x={2} y={3} />
-        <Tile color="dark" x={4} y={3} />
-        <Tile color="light" x={6} y={3} />
-        <Tile color="medium" x={8} y={3} />
-        <Tile color="dark" x={10} y={3} />
-        <Tile color="light" x={12} y={3} />
+        {board.slice(15, 22)}
       </div>
 
       <div className="row">
-        <Tile color="dark" x={1} y={4} />
-        <Tile color="light" x={3} y={4} />
-        <Tile color="medium" x={5} y={4} />
-        <Tile color="dark" x={7} y={4} />
-        <Tile color="light" x={9} y={4} />
-        <Tile color="medium" x={11} y={4} />
+        {board.slice(22, 28)}
       </div>
 
       <div className="row">
-        <Tile color="medium" x={2} y={5} />
-        <Tile color="dark" x={4} y={5} />
-        <Tile color="light" x={6} y={5} />
-        <Tile color="medium" x={8} y={5} />
-        <Tile color="dark" x={10} y={5} />
+        {board.slice(28, 33)}
       </div>
 
       <div className="row">
-        <Tile color="light" x={3} y={6} image="assets/images/RedBot.png" />
-        <Tile color="medium" x={5} y={6} image="assets/images/RedBot.png" />
-        <Tile color="dark" x={7} y={6} image="assets/images/RedBot.png" />
-        <Tile color="light" x={9} y={6} image="assets/images/RedBot.png" />
+        {board.slice(33, 37)}
       </div>
-
 
     </div>
   )
