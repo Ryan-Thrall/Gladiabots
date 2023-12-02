@@ -14,6 +14,7 @@ function Tile({ color, image, x, y }: Props) {
     <div className="hexContainer">
       {image && <div style={{ backgroundImage: `url(${image})` }} className="piece"></div>}
       <div className={classes}>
+        {x}, {y}
       </div>
 
     </div>
